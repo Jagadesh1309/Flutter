@@ -3,16 +3,16 @@ import re
 import jinja2
 
 # Path Configuration
-log_directory = 'tests/test_report/template/logs'
+log_directory = 'test_report/template/logs'
 screenshot_directory = os.path.join(
-    os.getcwd(), 'tests/test_report/screenshots')
-output_file_path = 'tests/test_report/test_report.html'
+    os.getcwd(), 'test_report/screenshots')
+output_file_path = 'test_report/test_report.html'
 
 # Initialize Jinja2 template environment
 template_loader = jinja2.FileSystemLoader(searchpath='./')
 template_env = jinja2.Environment(loader=template_loader)
 template = template_env.get_template(
-    'tests/test_report/template/report_template.html')
+    'test_report/template/report_template.html')
 
 lines_with_timings_exceptions_or_separator = []
 prev_ztm_time = None

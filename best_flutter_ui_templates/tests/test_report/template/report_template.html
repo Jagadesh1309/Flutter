@@ -139,16 +139,27 @@
   <div class="container">
     <div class="header">HTML Test Report - Flutter</div>
     <div class="summary">
-      <div class="highlight-box total-box">Total Suites: 1 | Total Tests: 1</div>
-      <div class="highlight-box pass-box">Pass: 1</div>
-      <div class="highlight-box fail-box">Fail: 0</div>
-      <div class="highlight-box execution-time-box">Execution Time: 0 minutes 7 seconds</div>
+      <div class="highlight-box total-box">Total Suites: {{ test_suites_count }} | Total Tests: {{ pass_count +
+        fail_count }}</div>
+      <div class="highlight-box pass-box">Pass: {{ pass_count }}</div>
+      <div class="highlight-box fail-box">Fail: {{ fail_count }}</div>
+      <div class="highlight-box execution-time-box">Execution Time: {{ total_execution_time }}</div>
     </div>
-    
-    
-    <p class="suite-header">      verify_diary_meals_test test suite results      </p>
-    
-      
+    {% for line in lines %}
+    {% if "=====" in line %}
+    <p class="suite-header">{{ line.replace('=', ' ') }}</p>
+    {% elif "<img" in line %} <div class="screenshot-container">
+      <button id="button{{ loop.index }}" class="screenshot-button"
+        onclick="toggleScreenshot('screenshot{{ loop.index }}', 'button{{ loop.index }}')">Show Screenshot</button>
+      <div id="screenshot{{ loop.index }}" class="screenshot" style="display:none;">
+        <img src="{{ line.split('src="')[1].split('"')[0] }}" alt="Screenshot" width="1000">
+      </div>
+      {% elif "ZTM-" in line%}
+      <p class="ztm-line">{{ line }}</p>
+      {% elif "Exception:" in line or "\\" in line and ":" in line%}
+      <p class="stack-line">{{ line }}</p>
+      {% endif %}
+      {% endfor %}
   </div>
   </div>
 </body>
